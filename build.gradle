@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:0.9.9'
+    }
+}
+
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = "1.6"
+    targetCompatibility = "1.6"
+}
+
+apply plugin: 'tomcat'
+apply plugin: 'idea'
+
+repositories { mavenCentral()
+    flatDir {
+        dirs '../../pdfrenderer'
+    }
+}
+dependencies {
+    compile(
+        'com.sun.jersey:jersey-core:1.17',
+        'com.sun.jersey:jersey-server:1.17',
+        'com.sun.jersey:jersey-servlet:1.17',
+        'com.sun.jersey:jersey-json:1.17',
+
+    )
+    compile name: 'PDFRenderer-0.9.1'
+   /* tomcat(
+        'org.apache.tomcat:tomcat-catalina:7.0.40',
+        'org.apache.tomcat:tomcat-coyote:7.0.40',
+        'org.apache.tomcat:tomcat-jasper:7.0.40',
+    ) */
+    tomcat(
+
+            'org.apache.tomcat:catalina:6.0.41',
+            'org.apache.tomcat:coyote:6.0.41',
+            'org.apache.tomcat:jasper:6.0.41',
+    )
+}
